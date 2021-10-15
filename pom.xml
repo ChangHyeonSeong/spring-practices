@@ -46,4 +46,7 @@
 		</plugins>
 	</build>
   
+	<modules>
+		<module>hellospring03</module>
+	</modules>
 </project>
