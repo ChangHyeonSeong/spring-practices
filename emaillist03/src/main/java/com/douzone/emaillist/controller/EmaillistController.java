@@ -19,19 +19,22 @@ public class EmaillistController {
 	@RequestMapping("")
 	public String index(Model model) {
 		List<EmaillistVo> list = emaillistRepository.findAll();
-		model.addAttribute(list);
+		for(EmaillistVo vo : list) {
+			System.out.println(vo);
+		}
+		model.addAttribute("list", list);
 		return "/WEB-INF/views/index.jsp";
 	}
 	
-	@RequestMapping(value="/form", method= RequestMethod.GET)
+	@RequestMapping(value="/form", method=RequestMethod.GET)
 	public String form() {
 		return "/WEB-INF/views/form.jsp";
 	}
 	
-	@RequestMapping(value="/add", method= RequestMethod.POST)
+	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public String add(EmaillistVo vo) {
 		emaillistRepository.insert(vo);
 		return "redirect:/";
 	}
-
+	
 }
