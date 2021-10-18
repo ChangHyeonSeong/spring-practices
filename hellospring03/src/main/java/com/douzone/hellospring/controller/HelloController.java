@@ -2,6 +2,13 @@ package com.douzone.hellospring.controller;
 
 
 
+import java.io.IOException;
+import java.io.Writer;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,5 +59,18 @@ public class HelloController {
      public String hello6() { 
 		 System.out.println("hello6() called");
     	 return "redirect:/hello";                    //스프링이 알아서 hellospring03 붙인다 기술기술기술
+     }
+	 
+	 @RequestMapping("/hello7")
+     public String hello7 (
+    		 HttpServletRequest req, 
+    		 HttpServletResponse resp, 
+    		 HttpSession session,                  //스프링 시큐리티 같은 기술을 쓰고 세션은 밖으로 뺴내야한다
+    		 Writer out)throws IOException {                         //톰켓에 종속적이게 된다 스프링은 톰켓에 종속적이 않는 이식성이 좋은 것이 목적이다
+		 String no = req.getParameter("n");
+		 
+		 out.write("<h1>Hello World</h1>");
+		
+    	 return "redirect:/hello";                    
      }
 }

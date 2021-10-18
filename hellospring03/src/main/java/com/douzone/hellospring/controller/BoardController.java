@@ -1,6 +1,7 @@
 package com.douzone.hellospring.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class BoardController {
 	
 	@ResponseBody
-	@RequestMapping("/board/view")
-	public String write() {
-		return "BoardController.write()";
+	@RequestMapping("/board/view/{no}")
+	public String write(@PathVariable("no") Long boardNo) {
+		return "BoardController.write(" + boardNo +")";
 	}
 }
