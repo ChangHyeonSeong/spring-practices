@@ -1,0 +1,274 @@
+Spring
+
+oop 객체지향프로그래밍
+aop 관점지향프로그래밍  -> oop 의 단점을 보안 
+                                -> 예) insert 할때 insert 관점 뿐만 아니라 다른 관점이 앞뒤로 있다 
+                                        다른 관점을 물리적으로 빼내서 핵심 비지니스 관점에 집중한다
+                                  ADao                         BDao                  CDao
+                            insert(){                         delete(){                 update(){
+    횡단관심              log()                               log()                       log()                             
+    핵심관심              execute()    }                 execute()    }                execute()  }
+ 
+-------->   횡단관심log()들을   클래스log  로 담아서 메소스( execute )실행앞에서 실행되게 설정한다        
+
+
+
+
+
+DI (Dependency Injection : 의존성 주입 ) 의존성 주입  
+
+의존관계
+클래스 A ------------> 클래스 B
+                has a
+의존성 주입 -> has a 관계에 있는 클래스 A에 클래스 B를 new해서 set해준다
+
+
+
+
+IoC(Inversion Of Control : 제어의 역전)
+객체의 대한 제어가 뒤집혔다
+스프링이 알아서 new를 하며 의존성 주입을 한다
+
+참고
+https://velog.io/@sudhez_a/DI-IoC-%EC%A0%95%EB%A6%AC
+
+
+
+
+PSA (Portable Service Abstraction)
+클래스 B가 인터페이스이고 B1 B2 B3 만들어서 B1을 쓰다가 B2로 바꿀때 소스변경없이 
+컴포넌트화해서 클래스B2만바꿔서 의존성주입을해주고있었는데 이걸 다시 @어노테이션으로 
+스캐닝으로 의존성주입을 해준다
+
+Spring @mvc  
+스캐닝으로 @어노테이션을 찾아서 의존성 주입을한다
+
+스프링인액션 4판 2장 5장 공부필요 
+
+
+
+10/18
+1교시 
+DI (Dependency Injection : 의존성 주입 )
+의존성 주입 -> 예시) has a 관계에 있는 클래스 A에서 클래스 B를 new해서 set해준다
+ 
+생성하는 방법은 setter 와 생성자로 셋팅한다
+
+IoC(Inversion Of Control : 제어의 역전)
+객체의 대한 제어가 뒤집혔다
+스프링이 알아서 new를 하며 의존성 주입을 한다
+
+여러가지 ioc방법 : xml(수동) , java(수동)
+                       어노테이션(자동)-> 컴파일러는 알아보고 검증, 
+                                                스프링컨테이너가 알아보고 생성(setter , 생성자)
+
+
+스프링컨테이너
+ApplicationContext ( interface )를 구현한 클래스로 만든 객체
+스프링인액션 4판 2장 5장 -> 와이어링을 다룬다
+
+스프링프레임워크를 어플리케이션프레임워크라 할수있다
+Application -> web, db, soket  등의 어플리케이션들에 스프링을 사용해서 스프링컨테이너가 관리해준다
+spring support -> 라이브러리  스프링컨테이너에 생긴다
+spring MVC 
+spring Data -> spring JDBC -> 토비책에서 jdbc템플릿 만드는 과정이 있다 
+spring MyBatis  
+
+
+       
+Spring Web  -> Tomcat 범위
+필터 리스너 소켓등 톰켓에 있는 서블릿들을 관리하기위한 라이브러리
+Spring MVC <-> Spring Web
+
+
+2교시
+시작부분 다시보기 서버런타임설정하는법
+
+pom.wml -> 스프링컨테이너, 스프링웹등등 설정
+web.xml -> 스프링에 있는 디스페쳐서블릿 설정
+
+
+/webapp
+  |---/hellospring03
+            |-----/WEB-INF
+                       |----classes
+                       |----lib
+                              |-----spring
+                              |-----디스패쳐서블릿
+
+
+web.wml에 config 파라미터를 설정하지 않으면
+init(){
+   new webXmlApplcation( spring - "context")
+}
+이렇게 생성한다
+
+WEB-INF밑에 spring-servlet.xml -> 이름이 다르면 에러, config 파라미터로 web.wml에 설정가능
+
+ spring-servlet.xml
+<context:annotation-config />   -> 어노테이션으로 생성한다
+<context:component-scan base-package="com.douzone.hellospring.controller" /> 
+   -> 위치를 설정해서 알려준다
+   -> 없으면 전부 다 스캐닝해서 느려진다
+
+스프링컨테이너 (web application context) 에서는
+톰켓을 이미 통과 했으므로 /hellospring03 같은 contextPath 를 신경쓰지않는다
+
+HandlerMapping
+스캐닝해서 어노테이션 확인후
+url 에 관련 정보들 메핑
+
+view Resolver
+
+messageConverter
+
+디스패쳐서블릿 동작 순서                      
+init() -> 스프링컨테이너생성 ->service -> doget() -> 특정 url 매핑정보 요청 
+-> HandlerMapping에서 매핑된 객체 함수 전달
+-> 만들어둔 객체 함수 실행 -> 함수 반환값 메세지 , 뷰네임 두가지로 반환
+                                   메세지는  @ResponseBody 붙인다 -> 반환값을 리스폰스에 붙혀라  
+                                   메세지는 string object 두가지 가능 
+                                   뷰네임은 string ModelAndView 두가지가능
+->메세지 -> 메세지컨버터
+->뷰네임 -> 뷰리졸버
+
+
+3교시
+->뷰네임 -> 뷰리졸버
+뷰네임은 string ModelAndView 두가지 반환가능
+ModelAndView에서 viewname 해당하는 string과 model 끄집어낸다
+                      Model model = new Model(); 만들어서 끄집어낸 모델 넣고 vr.resolve()에 파라미터로 전달
+
+->viewResolver.resolve( model )  -> view반환  -> view.render();
+
+@RequestMapping(value="/join",method=RequestMethod.POST)
+	public String join(UserVo vo) {                          //스프링이 알아서 셋팅해준다 request안에 셋팅된 속성의 이름이 같아야한다
+		System.out.println(vo);
+		
+		//new UserDao.insert(vo);
+		return "redirect:/";
+	}
+
+
+4교시
+@ResponseBody
+@RequestMapping("/board/view/{no}")
+public String write(@PathVariable("no") Long boardNo) {   
+	return "BoardController.write(" + boardNo +")";
+}
+
+
+/board/view/10 이렇게 쓰기위함
+
+REST fULL 
+(R)GET /mysite03/board/10   -> view 의 의미가 GET에 담겨 있으므로 이렇게 하는것이 좋다
+
+(C)POST /mysite03/board
+
+(U)PUT /mysite03/board/10
+
+(D)DElETE /mysite03/guestbook/10
+
+
+@ModelAttribute  model 객체 받아서 add 안해도 jsp에 그대로 넘어간다
+
+
+
+
+@RequestMapping("/hello7")
+public String hello7 (
+		 HttpServletRequest req, 
+		 HttpServletResponse resp, 
+		 HttpSession session,                  //스프링 시큐리티 같은 기술을 쓰고 세션은 밖으로 뺴내야한다
+    		 Writer out)throws IOException {                         //톰켓에 종속적이게 된다 스프링은 톰켓에 종속적이 않는 이식성이 좋은 것이 목적이다
+		 String no = req.getParameter("n");
+		 
+		 out.write("<h1>Hello World</h1>");
+		
+    	 return "redirect:/hello";                    
+     }
+
+
+
+com.douzone.emaillist.controller
+com.douzone.emaillist.repository   //스프링에선 dao를 repository로 사용
+com.douzone.emaillist.vo
+
+
+
+5교시
+emaillist03 
+
+10/19
+1교시
+
+ppt
+02.spring 자세히 알아보기 p23
+어플리케이션 아키텍쳐
+
+
+애자일
+
+scrum -> 팀
+
+xp -> 개발
+         -> TDD
+         -> CI
+         -> Code Review
+
+
+2교시
+폭포수 각단계가 fix 수정하기 어려움
+애자일 민첩하게 상황에 따라서 대응(수정)
+mysite03
+
+3교시
+스프링동작과정
+
+정적자원접근
+   톰켓에는 디폴트서블릿 이 매칭되지 않은 url을 받아서 처리한다
+   스프링은 모든 url을 디스페쳐서블릿이 받으므로 따로 설정해서 컨테이너에 핸들러매핑에 매핑한다
+mysite03 xml에서 설정
+
+
+4교시
+mysite03
+join login
+
+@Auth
+Intercept
+보안은 어플리케이션 밖에서 해야한다
+스프링에서 Intercept 기능으로 어플리케이션 밖에서 할수있다
+
+5교시
+mysite03
+logout
+update
+
+예외처리
+chesked Exception  -> trycatch 강제
+
+Unshecked -> error
+
+상투적인 예외처리 소스를 스프링에서는 한곳에 모은다
+
+똑같은예외처리가 반복되므로 한곳으로 모아서 처리한다 -> AOP @ControllerAdvice 
+
+6교시
+throw new UserRepositoryException(e.toString());
+
+@ControllerAdvice  -> AOP설정을 해준다
+                              어디 언제 무엇
+
+
+
+서블릿으로 들어오는 예외상황에서 보여줄 페이지설정을 web.xml에 할수있다
+
+스프링에선 한곳에 모아서 처리한다 -> GlobalExceptionHandler
+mysite03
+
+
+
+
+
+
