@@ -59,6 +59,7 @@
 
 
 		<!-- Servlet -->
+		<!-- 서버에서 빌드하기 위해 이클립스에서도 없으면 타겟런타임 잡아줘야한다 -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>

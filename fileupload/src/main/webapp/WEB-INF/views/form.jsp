@@ -17,10 +17,6 @@
 	<input type="file" name="file">
 	<br><br>
 	
-	<label>파일2</label>
-	<input type="file" name="file">
-	<br><br>
-	
 	<br>
 	<input type="submit" value="upload">
 </form>

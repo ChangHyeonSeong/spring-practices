@@ -19,7 +19,7 @@ public class FileUploadService {
     	}	
     	
     	String originFilename =  multipartFile.getOriginalFilename();
-    	String extName = originFilename.substring( originFilename.lastIndexOf('.')+1);
+    	String extName = originFilename.substring( originFilename.lastIndexOf('.')+1); //확장자 가져오기
     	String saveFilename = generateSaveFilename(extName);
     	long fileSize = multipartFile.getSize();
     	
