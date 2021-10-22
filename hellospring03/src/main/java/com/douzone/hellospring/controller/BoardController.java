@@ -16,6 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class BoardController {
 	
 	@ResponseBody
+	@RequestMapping("/board/write")
+	public String write() {
+		return "BoardController.write()";
+	}
+	
+	@ResponseBody
 	@RequestMapping("/board/view/{no}")
 	public String write(@PathVariable("no") Long boardNo) {
 		return "BoardController.write(" + boardNo +")";

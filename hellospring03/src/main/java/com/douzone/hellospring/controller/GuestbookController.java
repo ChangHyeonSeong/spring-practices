@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * @author user
  * 클래스(타입) 단독 매핑
+ * 메소드이름으로매핑
  * */
 @Controller
 @RequestMapping("/guestbook/*")
