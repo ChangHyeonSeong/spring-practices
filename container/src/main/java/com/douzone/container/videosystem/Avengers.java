@@ -1,4 +1,4 @@
-package com.douzone.container.config.videosystem;
+package com.douzone.container.videosystem;
 
 public class Avengers implements DigitalVideoDisc {
 
