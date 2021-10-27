@@ -48,8 +48,8 @@
 
 	<!-- 07. 빈설정: 생성자 Collection Argument -->
 	<bean id="avengersDirectorEdition" class="com.douzone.container.videosystem.BlankDisc"
-		c:title="Avengers Director Edition" 
-		c:studio="MARVEL" >
+		c:title="Avengers Director Edition"
+		c:studio="MARVEL">
 		<constructor-arg name="actors">
 			<list>
 				<value>Robert Downey Jr.</value>
@@ -58,13 +58,13 @@
 			</list>
 		</constructor-arg>
 	</bean>
-	
+
 	<!-- 08. 빈설정: 생성자 Wiring Collection -->
 	<bean id="avengersTriplepack" class="com.douzone.container.videosystem.DVDPack"
-		c:title="Avengers Triplepack" >
+		c:title="Avengers Triplepack">
 		<constructor-arg name="dvds">
 			<list>
-			 	<ref bean="avengersInfinityWar" />
+				<ref bean="avengersInfinityWar" />
 				<ref bean="avengerAgeOfUltron" />
 				<ref bean="avengerEndgame" />
 			</list>
@@ -72,15 +72,15 @@
 	</bean>
 	
 	<!-- 09. 빈설정: 프로퍼티를 사용한 빈설정 1 -->
-	<bean id="avengersExpandionEdition1" class="com.douzone.container.videosystem.BlankDisc">
+	<bean id="avengersExpansionEdition1" class="com.douzone.container.videosystem.BlankDisc">
 		<property name="title" value="Avengers Expansion Edition1" />
 		<property name="studio" value="MARVEL" />
-	</bean>
-	
+	</bean>		
+
 	<!-- 10. 빈설정: 프로퍼티를 사용한 빈설정 2 -->
-	<bean id="avengersExpandionEdition2" class="com.douzone.container.videosystem.BlankDisc"
-		p:title="Avengers Expansion Edition2" 
-		p:studio="MARVEL" >
+	<bean id="avengersExpansionEdition2" class="com.douzone.container.videosystem.BlankDisc"
+		p:title="Avengers Expansion Edition2"
+		p:studio="MARVEL">
 		<property name="actors">
 			<list>
 				<value>Robert Downey Jr.</value>
@@ -96,8 +96,32 @@
 		<value>Scalette</value>
 		<value>Chris Evans</value>
 	</util:list>
-	<bean id="avengersExpandionEdition3" class="com.douzone.container.videosystem.BlankDisc"
-		p:title="Avengers Expansion Edition3" 
-		p:studio="MARVEL" 
+	<bean id="avengersExpansionEdition3" class="com.douzone.container.videosystem.BlankDisc"
+		p:title="Avengers Expansion Edition3"
+		p:studio="MARVEL"
 		p:actors-ref="actorList" />
+
+	<!-- 12. 빈주입: 생성자1 -->
+	<bean id="dvdPlayer1" class="com.douzone.container.videosystem.DVDPlayer">
+		<constructor-arg ref="ironMan"/>
+	</bean>
+	
+	<!-- 13. 빈주입: 생성자2: c-namespace의 argument name을 사용하는 방법: Spring 3.x 지원 -->
+	<bean id="dvdPlayer2" class="com.douzone.container.videosystem.DVDPlayer"
+		c:dvd-ref="ironMan" />
+
+	<!-- 14. 빈주입: 생성자3: c-namespace의 argument index을 사용하는 방법: Spring 3.x 지원 -->
+	<bean id="dvdPlayer3" class="com.douzone.container.videosystem.DVDPlayer"
+		c:_0-ref="ironMan" />
+
+	<!-- 15. 빈주입: 프로퍼티1 -->
+	<bean id="dvdPlayer4" class="com.douzone.container.videosystem.DVDPlayer">
+		<property name="dvd" ref="ironMan" />
+	</bean>
+
+	<!-- 16. 빈주입: 프로퍼티2: p-namespace 사용 -->
+	<bean id="dvdPlayer5" class="com.douzone.container.videosystem.DVDPlayer"
+		p:dvd-ref="ironMan" />
+
+	
 </beans>

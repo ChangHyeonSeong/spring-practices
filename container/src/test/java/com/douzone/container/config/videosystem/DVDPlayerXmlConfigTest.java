@@ -1,5 +1,6 @@
 package com.douzone.container.config.videosystem;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Ignore;
@@ -13,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.douzone.container.videosystem.DVDPack;
+import com.douzone.container.videosystem.DVDPlayer;
 import com.douzone.container.videosystem.DigitalVideoDisc;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -55,16 +57,36 @@ public class DVDPlayerXmlConfigTest {
 	private DVDPack dvdPack;
 	
 	@Autowired
-	@Qualifier("avengersExpandionEdition1")
+	@Qualifier("avengersExpansionEdition1")
 	private DigitalVideoDisc dvd8;	
 	
 	@Autowired
-	@Qualifier("avengersExpandionEdition2")
-	private DigitalVideoDisc dvd9;
-	
+	@Qualifier("avengersExpansionEdition2")
+	private DigitalVideoDisc dvd9;	
+
 	@Autowired
-	@Qualifier("avengersExpandionEdition3")
-	private DigitalVideoDisc dvd10;
+	@Qualifier("avengersExpansionEdition3")
+	private DigitalVideoDisc dvd10;	
+
+	@Autowired
+	@Qualifier("dvdPlayer1")
+	private DVDPlayer dvdPlayer1;
+
+	@Autowired
+	@Qualifier("dvdPlayer2")
+	private DVDPlayer dvdPlayer2;
+
+	@Autowired
+	@Qualifier("dvdPlayer3")
+	private DVDPlayer dvdPlayer3;
+
+	@Autowired
+	@Qualifier("dvdPlayer4")
+	private DVDPlayer dvdPlayer4;
+
+	@Autowired
+	@Qualifier("dvdPlayer5")
+	private DVDPlayer dvdPlayer5;
 	
 	@Ignore
 	@Test
@@ -101,26 +123,56 @@ public class DVDPlayerXmlConfigTest {
 	public void testDVD7() {
 		assertNotNull(dvd7);
 	}
-	
+
 	@Test
 	public void testDVDPack() {
-		System.out.println(dvdPack);
+		// System.out.println(dvdPack);
 		assertNotNull(dvdPack);
 	}
-	
+
 	@Test
 	public void testDVD8() {
 		assertNotNull(dvd8);
 	}
-	
+
 	@Test
 	public void testDVD9() {
 		assertNotNull(dvd9);
 	}
-	
+
 	@Test
 	public void testDVD10() {
 		assertNotNull(dvd10);
+	}
+	
+	@Test
+	public void testPlay1() {
+		dvdPlayer1.play();
+		assertEquals("Playing Movie MARVEL's IronMan", systemOutRule.getLog().replace("\r\n", "").replace("\n", ""));
+	}
+
+	@Test
+	public void testPlay2() {
+		dvdPlayer2.play();
+		assertEquals("Playing Movie MARVEL's IronMan", systemOutRule.getLog().replace("\r\n", "").replace("\n", ""));
+	}
+
+	@Test
+	public void testPlay3() {
+		dvdPlayer3.play();
+		assertEquals("Playing Movie MARVEL's IronMan", systemOutRule.getLog().replace("\r\n", "").replace("\n", ""));
+	}
+
+	@Test
+	public void testPlay4() {
+		dvdPlayer4.play();
+		assertEquals("Playing Movie MARVEL's IronMan", systemOutRule.getLog().replace("\r\n", "").replace("\n", ""));
+	}
+
+	@Test
+	public void testPlay5() {
+		dvdPlayer5.play();
+		assertEquals("Playing Movie MARVEL's IronMan", systemOutRule.getLog().replace("\r\n", "").replace("\n", ""));
 	}
 	
 }
